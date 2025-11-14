@@ -1,0 +1,56 @@
+body{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #9ecfc2;
+    text-align: center;
+}
+button{
+    background-color: #e845a4; 
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+button:hover {
+    background-color: #b64a97;
+}
+.edit-button{
+    background-color: #e845a4; 
+    border: none;
+    color: white;
+    padding: 4px 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 2px 1px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.edit-button:hover {
+    background-color: #b64a97;
+}
+ul{
+    list-style: none;
+    background-color: #f4bfd7;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 19px;
+}
+#taskContainer{
+    width: 500px;
+    height: 600px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #f4bfd7;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
