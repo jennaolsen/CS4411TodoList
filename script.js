@@ -1,12 +1,26 @@
 
 let editingIndex = null;
-
+let selectedIndex = null;
 document.addEventListener("DOMContentLoaded", loadTasks);
 
 document.getElementById("addBtn").onclick = addTask;
 document.getElementById("addDateBtn").onclick = () => {
     document.getElementById("dateInput").style.display = "inline";
 };
+
+document.getElementById("deleteButton").onclick = () => {
+    if (selectedIndex !== null) {
+        deleteTask(selectedIndex);
+        selectedIndex = null;
+    }
+}
+document.getElementById("editButton").onclick = () => {
+    if (selectedIndex !== null) {
+        editTask(selectedIndex);
+        selectedIndex = null;
+    }
+}
+
 
 function addTask() {
     const text = document.getElementById("taskInput").value.trim();
@@ -86,17 +100,25 @@ function renderTasks() {
 
     tasks.forEach((t, i) => {
         let li = document.createElement("li");
-        let due = t.due ? ` (Due ${t.due})` : " (No Due Date)";
-        li.innerHTML = `
-            <span>
-                <input type="checkbox" ${t.done ? "checked" : ""} onclick="toggleDone(${i})">
-                ${t.text}${due}
-            </span>
-            <span>
-                <button class = "edit-button" onclick="editTask(${i})">Edit</button>
-                <span class="delete-btn" onclick="deleteTask(${i})">✖</span>
-            </span>
-        `;
+        li.classList.toggle("selected", i === selectedIndex);
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = t.done;
+        checkbox.onclick = (e) => {
+            e.stopPropagation();
+            toggleDone(i);
+        };
+
+        let due = t.due ? ` (Due: ${t.due})` : "";
+        let taskText = document.createElement("span");
+        taskText.textContent = `${t.text}${due}`;
+        li.onclick = () => {
+            selectedIndex = i;
+            renderTasks();
+        };
+        li.appendChild(checkbox);
+        li.appendChild(taskText);
+
         list.appendChild(li);
     });
 

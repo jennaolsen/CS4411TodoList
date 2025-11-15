@@ -43,6 +43,9 @@ ul{
     text-align: left;
     font-size: 19px;
 }
+#tasklist li{
+    border-bottom: 1px solid #ccc;
+}
 #taskContainer{
     width: 500px;
     height: 600px;
@@ -53,4 +56,13 @@ ul{
     background-color: #f4bfd7;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
+}
+#actionBar{
+    display: flex;
+    justify-content: center space-evenly;
+    padding: 5px;
+
+}
+#taskList li.selected{
+    background-color: #f762a5;
 }
