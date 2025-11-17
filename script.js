@@ -11,7 +11,6 @@ document.getElementById("addDateBtn").onclick = () => {
 document.getElementById("deleteButton").onclick = () => {
     if (selectedIndex !== null) {
         deleteTask(selectedIndex);
-        selectedIndex = null;
     }
 }
 document.getElementById("editButton").onclick = () => {
@@ -21,6 +20,11 @@ document.getElementById("editButton").onclick = () => {
     }
 }
 
+function formatDate(dateStr) {
+    if (!dateStr) return "";
+    const [year, month, day] = dateStr.split("-");
+    return `${month}/${day}/${year}`;
+}
 
 function addTask() {
     const text = document.getElementById("taskInput").value.trim();
@@ -52,6 +56,13 @@ function addTask() {
 function deleteTask(i) {
     let tasks = loadTasks();
     tasks.splice(i, 1);
+    if (tasks.length === 0) {
+        selectedIndex = null;       // no tasks left
+    } else if (i >= tasks.length) {
+        selectedIndex = tasks.length - 1;  // deleted the last item → select new last item
+    } else {
+        selectedIndex = i;          // select the item that shifted into this index
+    }
     saveTasks(tasks);
     renderTasks();
 }
@@ -109,7 +120,7 @@ function renderTasks() {
             toggleDone(i);
         };
 
-        let due = t.due ? ` (Due: ${t.due})` : "";
+        let due = t.due ? ` (Due: ${formatDate(t.due)})` : "";
         let taskText = document.createElement("span");
         taskText.textContent = `${t.text}${due}`;
         li.onclick = () => {
