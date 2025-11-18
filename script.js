@@ -32,6 +32,7 @@ function addTask() {
     if (!text) return;
 
     const task = {
+        id: crypto.randomUUID(),
         text,
         done: false,
         due: date
@@ -69,11 +70,17 @@ function deleteTask(i) {
 
 function toggleDone(i) {
     let tasks = loadTasks();
-    tasks[i].done = !tasks[i].done;
+    const task = tasks.find(t => t.id === i);
+    if (!task) return;
+
+    task.done = !task.done;
     saveTasks(tasks);
+    const taskCompleted = task.done;
     renderTasks();
 
-    if (tasks[i].done) triggerConfetti();
+    if (taskCompleted){
+         setTimeout(() => triggerConfetti(), 50);
+    }
 }
 
 function editTask(i) {
@@ -113,11 +120,12 @@ function renderTasks() {
         let li = document.createElement("li");
         li.classList.toggle("selected", i === selectedIndex);
         let checkbox = document.createElement("input");
+        checkbox.dataset.id = t.id;
         checkbox.type = "checkbox";
         checkbox.checked = t.done;
         checkbox.onclick = (e) => {
             e.stopPropagation();
-            toggleDone(i);
+            toggleDone(t.id);
         };
 
         let due = t.due ? ` (Due: ${formatDate(t.due)})` : "";
